@@ -1,23 +1,10 @@
 import React from 'react';
-import { MessageCircle, Eye, Star } from 'lucide-react';
+import { MessageCircle, Eye, Lock } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { ListProps } from '../models/articleOverview';
+import Image from 'next/image';
 
-interface ArticleOverview {
-  id: string;
-  title: string;
-  description: string;
-  author: string;
-  publication?: string;
-  date: string;
-  views: number;
-  comments: number;
-  isStarred?: boolean;
-}
-
-interface ListProps {
-  articles?: ArticleOverview[];
-}
 
 const List = ({ articles = [] }: ListProps) => {
 const router = useRouter();
@@ -36,54 +23,69 @@ const router = useRouter();
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {articles.map((article) => (
+      {articles.map((article, index) => (
         <div 
             key={article.id} 
-            className="border-b border-gray-200 py-6"
+            className="py-6"
             onClick={() => handleArticleClick(article.id)}
         >
-          <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-            {article.publication && (
-              <>
-                <span>In {article.publication}</span>
-                <span className="px-1">·</span>
-              </>
-            )}
-            <span>by {article.author}</span>
+
+        <div className="flex items-center gap-2 mb-4">
+         <Image 
+            width={23}
+           height={34}
+           src="https://via.placeholder.com/23x34"
+           alt="Author avatar"
+            />
+          
+          <div className="text-[#8F8F8F] text-xs font-semibold font-poppins break-words w-full"> 
+            <span>{article.author}</span>
           </div>
+
+         </div>
           
           <div className="flex justify-between items-start">
             <div className="flex-1 pr-4">
-              <h2 className="text-xl font-bold mb-1 text-gray-900">
+             
+              <div className="text-[#D9D9D9] text-lg font-semibold font-poppins break-words w-full mb-4">
                 {article.title}
-              </h2>
-              <p className="text-gray-600 text-sm mb-2">
+              </div>
+
+              <p className="text-gray-600 text-sm gap-2 mb-4">
                 {article.description}
               </p>
               
-              <div className="flex items-center space-x-4 text-sm text-gray-500">
-                <span>{article.date}</span>
-                <div className="flex items-center space-x-1">
-                  <Eye size={16} />
+              
+              <div className="flex items-center gap-4 mb-4">
+                <div className="text-[#ED6646] text-xs font-semibold font-poppins">
+                  <span>{article.date}</span>
+                </div>
+                
+                <div className="flex items-center gap-1 text-xs text-gray-500">
+                  <Eye size={12} />
                   <span>{article.views}</span>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <MessageCircle size={16} />
-                  <span>{article.comments}</span>
+
+                <div className="flex items-center gap-1 text-xs text-gray-500">
+                  <Lock size={12} />
                 </div>
-                {article.isStarred && (
-                  <div className="flex items-center space-x-1 text-yellow-500">
-                    <Star size={16} fill="currentColor" />
-                  </div>
-                )}
-              </div>
+            </div>
+                
+              
             </div>
             
             <div className="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0">
               {/* Placeholder for article thumbnail */}
             </div>
+
           </div>
+
+        {/* Divider */}
+          {index !== articles.length - 1 && (
+            <div style={{width: '100%', height: '1px', background: '#33363F'}}></div>
+          )}
         </div>
+        
       ))}
     </div>
   );

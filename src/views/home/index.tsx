@@ -15,6 +15,7 @@ import useUserSOLBalanceStore from '../../stores/useUserSOLBalanceStore';
 
 // Mock
 import { articles } from '../../mock/articles';
+import TrendingChips from 'components/Chips';
 
 export const HomeView: FC = ({ }) => {
   const wallet = useWallet();
@@ -22,6 +23,15 @@ export const HomeView: FC = ({ }) => {
 
   const balance = useUserSOLBalanceStore((s) => s.balance)
   const { getUserSOLBalance } = useUserSOLBalanceStore()
+
+  const [selectedChip, setSelectedChip] = useState('1');
+  
+  const trendingChips = [
+    { id: '1', label: 'Trending' },
+    { id: '2', label: 'Trading' },
+    { id: '3', label: 'Tech' },
+    { id: '4', label: 'News' }
+  ];
 
   useEffect(() => {
     if (wallet.publicKey) {
@@ -34,30 +44,14 @@ export const HomeView: FC = ({ }) => {
 
     <div className="md:hero mx-auto p-4">
       <div className="md:hero-content flex flex-col">
-        <div className='mt-6'>
-        <h1 className="text-center text-5xl md:pl-12 font-bold text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-fuchsia-500 mb-4">
-          PostsFlow
-        </h1>
+        <div className="sticky top-0 z-10 bg-transparent pb-4">
+          
+          <TrendingChips
+            chips={trendingChips}
+            selectedChipId={selectedChip}
+            onChipSelect={setSelectedChip}
+          />
         </div>
-        <h4 className="md:w-full text-2x1 md:text-4xl text-center text-slate-300 my-2">
-          <p className='text-slate-500 text-2x1 leading-relaxed'>MicroPayment - Only Possible On Solana </p>
-        </h4>
-    
-        {/* <div className="flex flex-col mt-2">
-          <RequestAirdrop />
-          <h4 className="md:w-full text-2xl text-slate-300 my-2">
-          {wallet &&
-          <div className="flex flex-row justify-center">
-            <div>
-              {(balance || 0).toLocaleString()}
-              </div>
-              <div className='text-slate-600 ml-2'>
-                SOL
-              </div>
-          </div>
-          }
-          </h4>
-        </div> */}
         <List articles={articles} />
         </div>
     </div>
