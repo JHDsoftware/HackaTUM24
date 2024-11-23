@@ -10,6 +10,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
+
         <Head>
         <link rel="shortcut icon" href="/favicon.ico"/>
         </Head>
@@ -18,6 +19,7 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
+
     );
   }
 }

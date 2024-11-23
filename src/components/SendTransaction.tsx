@@ -7,6 +7,9 @@ export const SendTransaction: FC = () => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 
+    // Get the author public key and send a transaction
+    // mock addr: 3NwSw9xrYf3kNdLCxZenbYgnuoZ3RL9C6EdVmXU7tSr3
+
     const onClick = useCallback(async () => {
         if (!publicKey) {
             notify({ type: 'error', message: `Wallet not connected!` });
