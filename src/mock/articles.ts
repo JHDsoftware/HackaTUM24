@@ -19,6 +19,26 @@ export const articles = [
     date: 'Oct 7',
     views: 3800,
     comments: 48
+  },
+  {
+    id: '3',
+    title: 'How to Build a MicroPayment System on Solana',
+    description: 'Quickly and easily build a micropayment system on Solana',
+    author: 'Xiyue ZHang',
+    publication: 'Stackademic',
+    date: 'Oct 7',
+    views: 300,
+    comments: 50
+  },
+  {
+    id: '4',
+    title: 'Mastering Rust: A Comprehensive Guide',
+    description: 'Learn Rust from scratch',
+    author: 'Benedict Eze',
+    publication: 'Stackademic',
+    date: 'Sep 12',
+    views: 800,
+    comments: 4
   }
 ];
 

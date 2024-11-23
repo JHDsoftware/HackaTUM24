@@ -1,7 +1,9 @@
 import React from 'react';
 import { MessageCircle, Eye, Star } from 'lucide-react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-interface Article {
+interface ArticleOverview {
   id: string;
   title: string;
   description: string;
@@ -14,10 +16,12 @@ interface Article {
 }
 
 interface ListProps {
-  articles?: Article[];
+  articles?: ArticleOverview[];
 }
 
 const List = ({ articles = [] }: ListProps) => {
+const router = useRouter();
+
   if (!articles || articles.length === 0) {
     return (
       <div className="w-full max-w-2xl mx-auto py-8 text-center text-gray-500">
@@ -26,10 +30,18 @@ const List = ({ articles = [] }: ListProps) => {
     );
   }
 
+  const handleArticleClick = (articleId: string) => {
+    router.push(`/article/${articleId}`);
+  };
+
   return (
     <div className="w-full max-w-2xl mx-auto">
       {articles.map((article) => (
-        <div key={article.id} className="border-b border-gray-200 py-6">
+        <div 
+            key={article.id} 
+            className="border-b border-gray-200 py-6"
+            onClick={() => handleArticleClick(article.id)}
+        >
           <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
             {article.publication && (
               <>
