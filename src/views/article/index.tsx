@@ -209,7 +209,7 @@ export const ArticleView: FC<ArticleViewProps> = ({ articleId }) => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       <ArticleHeader metadata={article.metadata} />
       <AuthorInfo author={article.author} metadata={article.metadata} />
       <ArticleActions />

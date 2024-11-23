@@ -32,10 +32,11 @@ const router = useRouter();
 
         <div className="flex items-center gap-2 mb-4">
          <Image 
-            width={23}
-           height={34}
-           src="https://via.placeholder.com/23x34"
+            width={30}
+           height={30}
+           src="/profile.jpg"
            alt="Author avatar"
+           className="rounded-full object-cover"
             />
           
           <div className="text-[#8F8F8F] text-xs font-semibold font-poppins break-words w-full"> 

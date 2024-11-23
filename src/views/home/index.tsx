@@ -42,18 +42,20 @@ export const HomeView: FC = ({ }) => {
 
   return (
 
-    <div className="md:hero mx-auto p-4">
-      <div className="md:hero-content flex flex-col">
-        <div className="sticky top-0 z-10 bg-transparent pb-4">
+    <div className="md:hero mx-auto p-2">
+      <div className="md:hero-content flex flex-col max-w-4xl w-full">
+        <div className="sticky top-0 z-10 px-4 py-1 bg-[radial-gradient(circle_farthest-side_at_50%_100%,rgba(1,9,18,0),rgba(1,6,14,0.6)_36%,rgba(1,14,29,0.6)_55%,rgba(49,18,93,0.4))]">
           
           <TrendingChips
             chips={trendingChips}
             selectedChipId={selectedChip}
             onChipSelect={setSelectedChip}
           />
+        </div >
+        <div className="px-6 py-2">
+          <List articles={articles} />
         </div>
-        <List articles={articles} />
-        </div>
+      </div>
     </div>
   );
 };
