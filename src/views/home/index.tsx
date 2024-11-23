@@ -39,25 +39,6 @@ export const HomeView: FC = ({ }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const generateNewArticle = async () => {
-    try {
-      const summaries = [
-        {
-          source: "https://example.com/ev-news",
-          summary: "New regulations for electric vehicles announced"
-        },
-        {
-          source: "https://example.com/battery-tech",
-          summary: "Breakthrough in battery manufacturing technology"
-        }
-      ];
-      
-      const result = await articleService.generateArticle(summaries);
-      console.log('Generated article:', result.generated_article);
-    } catch (error) {
-      console.error('Error generating article:', error.message);
-    }
-  };
 
   useEffect(() => {
     if (wallet.publicKey) {

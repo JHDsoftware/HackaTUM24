@@ -25,7 +25,11 @@ export const articleService = {
   generateArticle: async (summaries) => {
     try {
       const response = await apiClient.post('/generate-article', { summaries });
-      return response.data;
+      const text = response.data["generated_article"];
+      if (text) {
+        return text;
+      }
+      throw new Error('Failed to generate article');
     } catch (error) {
       throw new Error(error.response?.data?.error || 'Failed to generate article');
     }

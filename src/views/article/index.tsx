@@ -176,40 +176,40 @@ const handleBackClick = () => {
     setIsSaved(!isSaved);
   };
 
-  useEffect(() => {
-    const fetchArticle = async () => {
-      if (!articleId) return;
+//   useEffect(() => {
+//     const fetchArticle = async () => {
+//       if (!articleId) return;
       
-      try {
-        setIsLoading(true);
+//       try {
+//         setIsLoading(true);
         
         
 
-        const response = await fetch(`/article/${articleId}`);
+//         const response = await fetch(`/article/${articleId}`);
         
-        if (!response.ok) {
-          if (response.status === 404) {
-            throw new Error("Article not found");
-          }
-          throw new Error("Failed to fetch article");
-        }
+//         if (!response.ok) {
+//           if (response.status === 404) {
+//             throw new Error("Article not found");
+//           }
+//           throw new Error("Failed to fetch article");
+//         }
 
-        const data = await response.json();
-        setMetadata(data.metadata);
-        setAuthor(data.author);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An unknown error occurred");
-        // Optionally redirect after a delay
-        setTimeout(() => {
-          router.push('/article');
-          }, 3000);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+//         const data = await response.json();
+//         setMetadata(data.metadata);
+//         setAuthor(data.author);
+//       } catch (err) {
+//         setError(err instanceof Error ? err.message : "An unknown error occurred");
+//         // Optionally redirect after a delay
+//         setTimeout(() => {
+//           router.push('/article');
+//           }, 3000);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
 
-    fetchArticle();
-  }, [articleId, router]);
+//     fetchArticle();
+//   }, [articleId, router]);
 
 //   // Loading state
 //   if (isLoading) {

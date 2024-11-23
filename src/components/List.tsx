@@ -32,7 +32,8 @@ const router = useRouter();
         <div 
             key={article.news_id} 
             className="py-6"
-            onClick={() => handleArticleClick(article.news_id)}
+            // onClick={() => handleArticleClick(article.news_id)}
+            onClick={() => handleArticleClick('2')}
         >
 
        
