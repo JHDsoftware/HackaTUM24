@@ -1,12 +1,15 @@
 export interface ArticleOverview {
-  id: string;
+  news_id: string;
   title: string;
-  content: string;
-  author_id: string; //author id
+  content_link: string;
+  summary: string;
+  author: string; //author id
   published_at: string;
-  image_url: string;
+  rss_source: string;
+  image_links: string;
   likes: number;
   category: string;
+  score: number;
 }
 
 export interface ListProps {

@@ -1,9 +1,9 @@
 import { ArticleMetadata, Author, ArticleDetails } from '../models/article';
 
 export const articleDetails: Record<string, ArticleDetails> = {
-  '1': {
+  '5ebe0250bbc70a5cf708e66679409299': {
     metadata: {
-      id: '1',
+      id: '5ebe0250bbc70a5cf708e66679409299',
       title: 'Python is No More The King of Data Science',
       subtitle: '5 Reasons Why Python is Losing Its Crown',
       publishDate: 'Oct 23, 2023',

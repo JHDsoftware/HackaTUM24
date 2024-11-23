@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ListProps } from '../models/articleOverview';
 import Image from 'next/image';
+import { getRelativeTime } from 'utils/dateUtils';
 
 
 const List = ({ articles = [] }: ListProps) => {
@@ -25,9 +26,9 @@ const router = useRouter();
     <div className="w-full max-w-2xl mx-auto">
       {articles.map((article, index) => (
         <div 
-            key={article.id} 
+            key={article.news_id} 
             className="py-6"
-            onClick={() => handleArticleClick(article.id)}
+            onClick={() => handleArticleClick(article.news_id)}
         >
 
         <div className="flex items-center gap-2 mb-4">
@@ -40,7 +41,7 @@ const router = useRouter();
             />
           
           <div className="text-[#8F8F8F] text-xs font-semibold font-poppins break-words w-full"> 
-            <span>{article.author_id}</span>
+            <span>{article.author}</span>
           </div>
 
          </div>
@@ -52,19 +53,19 @@ const router = useRouter();
                 {article.title}
               </div>
 
-              <p className="text-gray-600 text-sm gap-2 mb-4">
-                {article.content}
-              </p>
+              {/* <p className="text-gray-600 text-sm gap-2 mb-4">
+                {article.content_link}
+              </p> */}
               
               
               <div className="flex items-center gap-4 mb-4">
                 <div className="text-[#ED6646] text-xs font-semibold font-poppins">
-                  <span>{article.published_at}</span>
+                  <span>{getRelativeTime(article.published_at)}</span>
                 </div>
                 
                 <div className="flex items-center gap-1 text-xs text-gray-500">
                   <Eye size={12} />
-                  <span>{article.likes}</span>
+                  <span>3800</span>
                 </div>
 
                 <div className="flex items-center gap-1 text-xs text-gray-500">
@@ -77,6 +78,12 @@ const router = useRouter();
             
             <div className="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0">
               {/* Placeholder for article thumbnail */}
+              <Image 
+                width={96}
+                height={96}
+                src={article.image_links}
+                alt="Article thumbnail"
+              />
             </div>
 
           </div>
