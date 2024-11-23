@@ -112,22 +112,19 @@ const ArticleStats = ({ stats }: { stats: ArticleMetadata['stats'] }) => {
           <span>💬</span>
           <span className="text-sm text-gray-500">{stats.comments}</span>
         </div>
+        <div className="flex items-center space-x-1">
+          <span>💬</span>
+          <span className="text-sm text-gray-500">{stats.views}</span>
+        </div>
+        <div className="flex items-center space-x-1">
+          <span>💬</span>
+          <span className="text-sm text-gray-500">{stats.likes}</span>
+        </div>
       </div>
     </div>
   );
 };
 
-// Non-member Notice Component
-const NonMemberNotice = () => {
-  return (
-    <div className="max-w-2xl mx-auto px-4 py-6 border-t border-gray-200">
-      <p className="text-gray-600">
-        Not a member yet, read it{' '}
-        <a href="#" className="underline text-gray-900">here</a>.
-      </p>
-    </div>
-  );
-};
 
 // Main Page Component
 export const ArticleView: FC<ArticleViewProps> = ({ articleId }) => {
@@ -137,72 +134,72 @@ export const ArticleView: FC<ArticleViewProps> = ({ articleId }) => {
   const [metadata, setMetadata] = useState<ArticleMetadata | null>(null);
   const [author, setAuthor] = useState<Author | null>(null);
 
-  useEffect(() => {
-    const fetchArticle = async () => {
-      if (!articleId) return;
+//   useEffect(() => {
+//     const fetchArticle = async () => {
+//       if (!articleId) return;
       
-      try {
-        setIsLoading(true);
-        // Example fetch call
-        const response = await fetch(`/api/articles/${articleId}`);
+//       try {
+//         setIsLoading(true);
+//         // Example fetch call
+//         const response = await fetch(`/articles/${articleId}`);
         
-        if (!response.ok) {
-          if (response.status === 404) {
-            throw new Error("Article not found");
-          }
-          throw new Error("Failed to fetch article");
-        }
+//         if (!response.ok) {
+//           if (response.status === 404) {
+//             throw new Error("Article not found");
+//           }
+//           throw new Error("Failed to fetch article");
+//         }
 
-        const data = await response.json();
-        setMetadata(data.metadata);
-        setAuthor(data.author);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An unknown error occurred");
-        // Optionally redirect after a delay
-        setTimeout(() => {
-          router.push('/article');
-          }, 3000);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+//         const data = await response.json();
+//         setMetadata(data.metadata);
+//         setAuthor(data.author);
+//       } catch (err) {
+//         setError(err instanceof Error ? err.message : "An unknown error occurred");
+//         // Optionally redirect after a delay
+//         setTimeout(() => {
+//           router.push('/article');
+//           }, 3000);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
 
-    fetchArticle();
-  }, [articleId, router]);
+//     fetchArticle();
+//   }, [articleId, router]);
 
-  // Loading state
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900" />
-      </div>
-    );
-  }
+//   // Loading state
+//   if (isLoading) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center">
+//         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900" />
+//       </div>
+//     );
+//   }
 
-  // Error state
-  if (error) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-red-500 text-xl mb-4">
-          {error}
-        </div>
-        <div className="text-gray-600">
-          Redirecting to articles list...
-        </div>
-      </div>
-    );
-  }
+//   // Error state
+//   if (error) {
+//     return (
+//       <div className="min-h-screen flex flex-col items-center justify-center">
+//         <div className="text-red-500 text-xl mb-4">
+//           {error}
+//         </div>
+//         <div className="text-gray-600">
+//           Redirecting to articles list...
+//         </div>
+//       </div>
+//     );
+//   }
 
-   // No data state
-  if (!metadata || !author) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-gray-600">
-          No article data available
-        </div>
-      </div>
-    );
-  }
+//    // No data state
+//   if (!metadata || !author) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center">
+//         <div className="text-gray-600">
+//           No article data available
+//         </div>
+//       </div>
+//     );
+//   }
 
   // MOCK DATA
   const article = getArticleById(articleId);
@@ -219,11 +216,10 @@ export const ArticleView: FC<ArticleViewProps> = ({ articleId }) => {
       <ArticleContent>
         {/* Article content goes here */}
         <p className="text-gray-600">
-          I assume you have been coding in Python for...
+          {article.metadata.content}
         </p>
       </ArticleContent>
       <ArticleStats stats={article.metadata.stats} />
-      <NonMemberNotice />
     </div>
   );
 };
