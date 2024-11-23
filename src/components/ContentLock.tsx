@@ -27,8 +27,7 @@ export const ContentLock = ({ isPreview = true, previewContent, lockedContent }:
       {isPreview && (
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/90 to-white">
           <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col items-center text-center">
-            
-
+        
             <div className="bg-black/40 backdrop-blur-sm p-6 rounded-xl shadow-sm w-60 mb-8">
               <p className="text-[#D9D9D9] mb-6">
                 The author made this story available to paid users only. 

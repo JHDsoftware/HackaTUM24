@@ -3,7 +3,12 @@ import { Keypair, PublicKey, SystemProgram, Transaction, TransactionMessage, Tra
 import { FC, useCallback } from 'react';
 import { notify } from "../utils/notifications";
 
-export const SendTransaction: FC<{toAddr: string}> = ({toAddr}) => {
+interface SendTransactionProps {
+  toAddr?: string;
+  onSuccess?: () => void;  // Add this prop
+}
+
+export const SendTransaction: FC<SendTransactionProps> = ({ toAddr, onSuccess }) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
  
@@ -50,12 +55,13 @@ export const SendTransaction: FC<{toAddr: string}> = ({toAddr}) => {
 
             console.log(signature);
             notify({ type: 'success', message: 'Transaction successful!', txid: signature });
+            onSuccess?.();
         } catch (error: any) {
             notify({ type: 'error', message: `Transaction failed!`, description: error?.message, txid: signature });
             console.log('error', `Transaction failed! ${error?.message}`, signature);
             return;
         }
-    }, [publicKey, notify, connection, sendTransaction]);
+    }, [publicKey, notify, connection, sendTransaction, toAddr, onSuccess]);
 
     return (
         <div className="flex flex-row justify-center">

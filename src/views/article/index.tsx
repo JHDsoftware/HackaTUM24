@@ -96,7 +96,12 @@ const ArticleActions = ({ onListen, onShare }: { onListen?: () => void; onShare?
 };
 
 // Main Content Component
-const ArticleContent = ({ children, isPreview = true, toAddr }: { children: string, isPreview?: boolean, toAddr?: string }) => {
+const ArticleContent = ({ children, isPreview = true, toAddr, setIsPreview }: { 
+    children: string, 
+    isPreview?: boolean,
+     toAddr?: string, 
+     setIsPreview?: (isPreview: boolean) => void 
+}) => {
     const previewContent = `Let's be very clear: I do think Python is the GOAT. I don't deny that. Yet, it doesn't come without flaws either. It might not lose its place in one night, but there are cracks forming.
 
 Edit: Hey everyone, this article reflects my personal opinion, and I fully respect that others may disagree. Healthy debate is welcome — after all, different perspectives are what drive progress!`;
@@ -111,9 +116,12 @@ Edit: Hey everyone, this article reflects my personal opinion, and I fully respe
             lockedContent={children}
         />
     </article>
-    <div className="space-y-3 w-full max-w-lg">
-        <SendTransaction toAddr={toAddr} />  
-    </div>
+    {isPreview && <div className="space-y-3 w-full max-w-lg">
+        <SendTransaction 
+        toAddr={toAddr} 
+        onSuccess={() => setIsPreview(false)}
+        />  
+    </div>}
     </>
   );
 };
@@ -252,7 +260,11 @@ const handleBackClick = () => {
       <ArticleHeader metadata={article.metadata} />
       <AuthorInfo author={article.author} metadata={article.metadata} />
       <ArticleActions />
-      <ArticleContent isPreview={isPreview} toAddr={article.author.address}>
+      <ArticleContent 
+        isPreview={isPreview} 
+        toAddr={article.author.address}
+        setIsPreview={setIsPreview}
+      >
         {/* Article content goes here */}
        
           {article.metadata.content}
