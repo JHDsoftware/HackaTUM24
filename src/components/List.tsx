@@ -76,13 +76,15 @@ const router = useRouter();
               
             </div>
             
-            <div className="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0">
+            <div className="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0 image-container">
               {/* Placeholder for article thumbnail */}
               <Image 
                 width={96}
                 height={96}
                 src={article.image_links}
                 alt="Article thumbnail"
+                className="article-image"
+    style={{ objectFit: 'cover' }}
               />
             </div>
 
