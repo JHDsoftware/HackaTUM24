@@ -2,7 +2,7 @@ import React from 'react';
 import { MessageCircle, Eye, Lock } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { ListProps } from '../models/articleOverview';
+import { ListProps, ArticleOverview } from '../models/articleOverview';
 import Image from 'next/image';
 import { getRelativeTime } from 'utils/dateUtils';
 
@@ -22,6 +22,10 @@ const router = useRouter();
     router.push(`/article/${articleId}`);
   };
 
+  const handleSelect = (article: ArticleOverview) => {
+    console.log('Selected article:', article);
+  };
+
   return (
     <div className="w-full max-w-2xl mx-auto">
       {articles.map((article, index) => (
@@ -31,20 +35,31 @@ const router = useRouter();
             onClick={() => handleArticleClick(article.news_id)}
         >
 
-        <div className="flex items-center gap-2 mb-4">
-         <Image 
-            width={30}
-           height={30}
-           src="/profile.jpg"
-           alt="Author avatar"
-           className="rounded-full object-cover"
-            />
-          
-          <div className="text-[#8F8F8F] text-xs font-semibold font-poppins break-words w-full"> 
-            <span>{article.author}</span>
-          </div>
+       
+            <div className="flex items-center justify-between gap-2 mb-4">
+                <div className="flex items-center gap-2">
+  
+                    <Image 
+                        width={30}
+                        height={30}
+                        src="/profile.jpg"
+                        alt="Author avatar"
+                        className="rounded-full object-cover"
+                        />
+                
+                    <div className="text-[#8F8F8F] text-xs font-semibold font-poppins break-words"> 
+                        <span>{article.author}</span>
+                    </div>
+                </div>
 
-         </div>
+                <button 
+                    className="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-600 rounded-full hover:bg-blue-50 transition-colors"
+                    onClick={() => handleSelect(article)}
+                >
+                    Select
+                </button>
+
+            </div>
           
           <div className="flex justify-between items-start">
             <div className="flex-1 pr-4">
@@ -84,7 +99,7 @@ const router = useRouter();
                 src={article.image_links}
                 alt="Article thumbnail"
                 className="article-image"
-    style={{ objectFit: 'cover' }}
+                style={{ objectFit: 'cover' }}
               />
             </div>
 
