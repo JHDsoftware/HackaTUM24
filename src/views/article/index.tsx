@@ -1,5 +1,6 @@
 import React from 'react';
 import { FC, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Play, Share2, MoreHorizontal } from 'lucide-react';
 import { useRouter } from "next/router";
 import { getArticleById } from '../../mock/articleDetails';
@@ -15,10 +16,10 @@ const ArticleHeader = ({ metadata }: { metadata: ArticleMetadata }) => {
           <span className="text-sm">✦ Member-only story</span>
         </div>
       )}
-      <h1 className="text-4xl font-bold mb-2 text-gray-900">
+      <h1 className="text-4xl font-bold mb-2 text-[#D9D9D9]">
         {metadata.title}
       </h1>
-      <h2 className="text-xl text-gray-600 mb-6">
+      <h2 className="text-xl text-[#5D5D5D] mb-6">
         {metadata.subtitle}
       </h2>
     </header>
@@ -31,9 +32,11 @@ const AuthorInfo = ({ author, metadata }: { author: Author; metadata: ArticleMet
     <div className="max-w-2xl mx-auto px-4 mb-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <img
-            src="/api/placeholder/40/40"
+          <Image
+            src="/profile.jpg"
             alt={author.name}
+            width={50}
+            height={50}
             className="w-10 h-10 rounded-full"
           />
           <div>
