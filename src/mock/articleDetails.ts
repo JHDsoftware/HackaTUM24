@@ -34,7 +34,7 @@ As data science evolves, the ecosystem has become increasingly fragmented...
       coverImage: 'https://example.com/images/python-data-science.jpg'
     },
     author: {
-      id: 'ar123',
+      address: '9NPjSbDECcyAhN2E7J2eM5fKaTpfQQTnX72RjjcettXV',
       name: 'Abdur Rahman',
       image: 'https://example.com/images/abdur-rahman.jpg',
       following: false,
@@ -87,7 +87,7 @@ def organize_files(directory):
       coverImage: 'https://example.com/images/python-automation.jpg'
     },
     author: {
-      id: 'ar123',
+      address: '3NwSw9xrYf3kNdLCxZenbYgnuoZ3RL9C6EdVmXU7tSr3',
       name: 'Abdur Rahman',
       image: 'https://example.com/images/abdur-rahman.jpg',
       following: false,

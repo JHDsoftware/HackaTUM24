@@ -5,7 +5,9 @@ import { Play, Share2, MoreHorizontal } from 'lucide-react';
 import { useRouter } from "next/router";
 import { getArticleById } from '../../mock/articleDetails';
 import { ArticleMetadata, Author, ArticleViewProps, ArticleDetails } from '../../models/article';
-
+import { ContentLock } from 'components/ContentLock';
+import { SendTransaction } from 'components/SendTransaction';
+import { TopBar } from 'components/TopBar';
 
 // Header Component
 const ArticleHeader = ({ metadata }: { metadata: ArticleMetadata }) => {
@@ -94,11 +96,25 @@ const ArticleActions = ({ onListen, onShare }: { onListen?: () => void; onShare?
 };
 
 // Main Content Component
-const ArticleContent = ({ children }: { children: React.ReactNode }) => {
+const ArticleContent = ({ children, isPreview = true, toAddr }: { children: string, isPreview?: boolean, toAddr?: string }) => {
+    const previewContent = `Let's be very clear: I do think Python is the GOAT. I don't deny that. Yet, it doesn't come without flaws either. It might not lose its place in one night, but there are cracks forming.
+
+Edit: Hey everyone, this article reflects my personal opinion, and I fully respect that others may disagree. Healthy debate is welcome — after all, different perspectives are what drive progress!`;
+
+  const fullContent = `[Full article content here...]`;
   return (
-    <article className="max-w-2xl mx-auto px-4 prose prose-lg">
-      {children}
+    <>
+    <article className="max-w-2xl mx-auto px-4 prose prose-lg prose-headings:text-[#D9D9D9] prose-p:text-[#D9D9D9]">
+        <ContentLock 
+            isPreview={isPreview} 
+            previewContent={previewContent}
+            lockedContent={children}
+        />
     </article>
+    <div className="space-y-3 w-full max-w-lg">
+        <SendTransaction toAddr={toAddr} />  
+    </div>
+    </>
   );
 };
 
@@ -136,6 +152,19 @@ export const ArticleView: FC<ArticleViewProps> = ({ articleId }) => {
   const [error, setError] = useState<string | null>(null);
   const [metadata, setMetadata] = useState<ArticleMetadata | null>(null);
   const [author, setAuthor] = useState<Author | null>(null);
+
+  const [isPreview, setIsPreview] = useState(true);
+  const [isSaved, setIsSaved] = useState(false);
+
+const handleBackClick = () => {
+    // Handle navigation
+    router.back();
+    console.log('Back clicked');
+  };
+
+  const handleSaveClick = () => {
+    setIsSaved(!isSaved);
+  };
 
 //   useEffect(() => {
 //     const fetchArticle = async () => {
@@ -211,16 +240,23 @@ export const ArticleView: FC<ArticleViewProps> = ({ articleId }) => {
     return <div>Article not found</div>;
   }
 
+
   return (
     <div className="min-h-screen bg-black">
+        <TopBar 
+            category="Trending"
+            onBackClick={handleBackClick}
+            onSaveClick={handleSaveClick}
+            isSaved={isSaved}
+        />
       <ArticleHeader metadata={article.metadata} />
       <AuthorInfo author={article.author} metadata={article.metadata} />
       <ArticleActions />
-      <ArticleContent>
+      <ArticleContent isPreview={isPreview} toAddr={article.author.address}>
         {/* Article content goes here */}
-        <p className="text-gray-600">
+       
           {article.metadata.content}
-        </p>
+        
       </ArticleContent>
       <ArticleStats stats={article.metadata.stats} />
     </div>

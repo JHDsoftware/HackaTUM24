@@ -1,14 +1,13 @@
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Keypair, SystemProgram, Transaction, TransactionMessage, TransactionSignature, VersionedTransaction } from '@solana/web3.js';
+import { Keypair, PublicKey, SystemProgram, Transaction, TransactionMessage, TransactionSignature, VersionedTransaction } from '@solana/web3.js';
 import { FC, useCallback } from 'react';
 import { notify } from "../utils/notifications";
 
-export const SendTransaction: FC = () => {
+export const SendTransaction: FC<{toAddr: string}> = ({toAddr}) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
-
-    // Get the author public key and send a transaction
-    // mock addr: 3NwSw9xrYf3kNdLCxZenbYgnuoZ3RL9C6EdVmXU7tSr3
+ 
+    const toPubkey = new PublicKey(toAddr);
 
     const onClick = useCallback(async () => {
         if (!publicKey) {
@@ -24,7 +23,8 @@ export const SendTransaction: FC = () => {
             const instructions = [
                 SystemProgram.transfer({
                     fromPubkey: publicKey,
-                    toPubkey: Keypair.generate().publicKey,
+                    toPubkey: toPubkey,
+                    
                     lamports: 1_000_000,
                 }),
             ];
@@ -70,7 +70,7 @@ export const SendTransaction: FC = () => {
                         Wallet not connected
                         </div>
                          <span className="block group-disabled:hidden" >
-                            Send Transaction
+                            Unlock By 1.99 USDC
                         </span>
                     </button>
              </div>
