@@ -19,6 +19,11 @@ import TrendingChips from 'components/Chips';
 import { articleService } from 'services/api';
 import { ArticleOverview } from 'models/articleOverview';
 
+interface SelectedArticle {
+  source: string;
+  summary: string;
+}
+
 export const HomeView: FC = ({ }) => {
   const wallet = useWallet();
   const { connection } = useConnection();
@@ -27,6 +32,40 @@ export const HomeView: FC = ({ }) => {
   const { getUserSOLBalance } = useUserSOLBalanceStore()
 
   const [selectedChip, setSelectedChip] = useState('1');
+
+  const [selectedArticles, setSelectedArticles] = useState<SelectedArticle[]>([]);
+  const [articles, setArticles] = useState<ArticleOverview[]>([]); // Your articles data
+
+  const handleSelectionChange = (newSelection: SelectedArticle[]) => {
+    setSelectedArticles(newSelection);
+    // TODO: Add logic to handle selected articles
+    console.log('Selected articles:', newSelection);
+  };
+
+  const handleGenerate = () => {
+    // TODO: Add logic to generate from selected articles
+    console.log('Generating from selected articles:', selectedArticles);
+  };
+
+    const generateNewArticle = async () => {
+    try {
+        const summaries = [
+        {
+            source: "https://example.com/ev-news",
+            summary: "New regulations for electric vehicles announced"
+        },
+        {
+            source: "https://example.com/battery-tech",
+            summary: "Breakthrough in battery manufacturing technology"
+        }
+        ];
+        
+        const result = await articleService.generateArticle(summaries);
+        console.log('Generated article:', result.generated_article);
+    } catch (error) {
+        console.error('Error generating article:', error.message);
+    }
+  };
   
   const trendingChips = [
     { id: '1', label: 'Trending' },
@@ -35,7 +74,7 @@ export const HomeView: FC = ({ }) => {
     { id: '4', label: 'News' }
   ];
 
-  const [articles, setArticles] = useState<ArticleOverview[]>([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -73,20 +112,44 @@ export const HomeView: FC = ({ }) => {
 
   return (
 
-    <div className="md:hero mx-auto p-2">
-      <div className="md:hero-content flex flex-col max-w-4xl w-full">
-        <div className="sticky top-0 z-10 px-4 py-1 bg-[radial-gradient(circle_farthest-side_at_50%_100%,rgba(1,9,18,0),rgba(1,6,14,0.6)_36%,rgba(1,14,29,0.6)_55%,rgba(49,18,93,0.4))]">
-          
-          <TrendingChips
-            chips={trendingChips}
-            selectedChipId={selectedChip}
-            onChipSelect={setSelectedChip}
-          />
-        </div >
-        <div className="px-6 py-2">
-          <List articles={articles} />
-        </div>
-      </div>
+<div className="md:hero mx-auto p-2">
+  <div className="md:hero-content flex flex-col max-w-4xl w-full relative min-h-screen pb-20">
+    <div className="sticky top-0 z-10 px-4 py-1 bg-[radial-gradient(circle_farthest-side_at_50%_100%,rgba(1,9,18,0),rgba(1,6,14,0.6)_36%,rgba(1,14,29,0.6)_55%,rgba(49,18,93,0.4))]">
+      <TrendingChips
+        chips={trendingChips}
+        selectedChipId={selectedChip}
+        onChipSelect={setSelectedChip}
+      />
     </div>
+    <div className="px-6 py-2">
+      <List 
+        articles={articles} 
+        selectedArticles={selectedArticles}
+        onSelectionChange={handleSelectionChange}
+      />
+    </div>
+
+    {/* Generate Button - Fixed at bottom */}
+    <div className="fixed bottom-8 left-0 right-0 flex justify-center z-20">
+      <button
+        onClick={() => handleGenerate()}
+        disabled={selectedArticles.length === 0}
+        className={`
+          px-8 py-3 rounded-full font-semibold shadow-lg
+          transition-all duration-200 transform hover:scale-105
+          ${selectedArticles.length === 0
+            ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+            : 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800'
+          }
+        `}
+      >
+        {selectedArticles.length > 0 
+          ? `Generate from ${selectedArticles.length} articles`
+          : 'Select articles to generate'
+        }
+      </button>
+    </div>
+  </div>
+</div>
   );
 };
