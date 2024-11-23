@@ -3,13 +3,6 @@ from sshtunnel import SSHTunnelForwarder
 from constents import *
 
 def save_articles_to_db(articles):
-    # Set up an SSH tunnel to connect to the Azure server
-    with SSHTunnelForwarder(
-        (ssh_host, 22),
-        ssh_username=ssh_user,
-        ssh_pkey=ssh_key_path,
-        remote_bind_address=(db_host, db_port)
-    ) as tunnel:
         try:
             # Connect to the MySQL database through the SSH tunnel
             connection = pymysql.connect(
@@ -17,7 +10,7 @@ def save_articles_to_db(articles):
                 user=db_user,
                 password=db_password,
                 database=db_name,
-                port=tunnel.local_bind_port
+                port=db_port
             )
             with connection.cursor() as cursor:
                 for article in articles:
