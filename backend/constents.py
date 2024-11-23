@@ -5,7 +5,7 @@ gpt4o_endpoint = "https://hackatum-2024.openai.azure.com/openai/deployments/gpt-
 # URLs of the RSS feeds
 rss_urls = [
     "https://rss.app/feeds/u6rcvfy6PTSf9vQ4.xml",
-    # Add more RSS feed URLs here
+    "https://rss.app/feeds/MLuDKqkwFtd2tuMr.xml"
 ]
 
 # List of domains to blacklist due to paywalls
