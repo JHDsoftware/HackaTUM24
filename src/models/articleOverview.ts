@@ -1,13 +1,12 @@
 export interface ArticleOverview {
   id: string;
   title: string;
-  description: string;
-  author: string; //author id
-  publication?: string;
-  date: string;
-  views: number;
-  comments: number;
-  isStarred?: boolean;
+  content: string;
+  author_id: string; //author id
+  published_at: string;
+  image_url: string;
+  likes: number;
+  category: string;
 }
 
 export interface ListProps {

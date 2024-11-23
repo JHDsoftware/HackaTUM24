@@ -14,8 +14,10 @@ import  List  from '../../components/List';
 import useUserSOLBalanceStore from '../../stores/useUserSOLBalanceStore';
 
 // Mock
-import { articles } from '../../mock/articles';
+// import { articles } from '../../mock/articles';
 import TrendingChips from 'components/Chips';
+import { articleService } from 'services/api';
+import { ArticleOverview } from 'models/articleOverview';
 
 export const HomeView: FC = ({ }) => {
   const wallet = useWallet();
@@ -33,12 +35,60 @@ export const HomeView: FC = ({ }) => {
     { id: '4', label: 'News' }
   ];
 
+  const [articles, setArticles] = useState<ArticleOverview[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const generateNewArticle = async () => {
+    try {
+      const summaries = [
+        {
+          source: "https://example.com/ev-news",
+          summary: "New regulations for electric vehicles announced"
+        },
+        {
+          source: "https://example.com/battery-tech",
+          summary: "Breakthrough in battery manufacturing technology"
+        }
+      ];
+      
+      const result = await articleService.generateArticle(summaries);
+      console.log('Generated article:', result.generated_article);
+    } catch (error) {
+      console.error('Error generating article:', error.message);
+    }
+  };
+
   useEffect(() => {
     if (wallet.publicKey) {
       console.log(wallet.publicKey.toBase58())
       getUserSOLBalance(wallet.publicKey, connection)
     }
   }, [wallet.publicKey, connection, getUserSOLBalance])
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setIsLoading(true);
+        const data = await articleService.getAllArticles();
+        setArticles(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []); 
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
 

@@ -9,6 +9,8 @@ import { ContentLock } from 'components/ContentLock';
 import { SendTransaction } from 'components/SendTransaction';
 import { TopBar } from 'components/TopBar';
 
+import { articleService } from 'services/api';
+
 // Header Component
 const ArticleHeader = ({ metadata }: { metadata: ArticleMetadata }) => {
   return (
@@ -174,38 +176,40 @@ const handleBackClick = () => {
     setIsSaved(!isSaved);
   };
 
-//   useEffect(() => {
-//     const fetchArticle = async () => {
-//       if (!articleId) return;
+  useEffect(() => {
+    const fetchArticle = async () => {
+      if (!articleId) return;
       
-//       try {
-//         setIsLoading(true);
-//         // Example fetch call
-//         const response = await fetch(`/articles/${articleId}`);
+      try {
+        setIsLoading(true);
         
-//         if (!response.ok) {
-//           if (response.status === 404) {
-//             throw new Error("Article not found");
-//           }
-//           throw new Error("Failed to fetch article");
-//         }
+        
 
-//         const data = await response.json();
-//         setMetadata(data.metadata);
-//         setAuthor(data.author);
-//       } catch (err) {
-//         setError(err instanceof Error ? err.message : "An unknown error occurred");
-//         // Optionally redirect after a delay
-//         setTimeout(() => {
-//           router.push('/article');
-//           }, 3000);
-//       } finally {
-//         setIsLoading(false);
-//       }
-//     };
+        const response = await fetch(`/article/${articleId}`);
+        
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("Article not found");
+          }
+          throw new Error("Failed to fetch article");
+        }
 
-//     fetchArticle();
-//   }, [articleId, router]);
+        const data = await response.json();
+        setMetadata(data.metadata);
+        setAuthor(data.author);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An unknown error occurred");
+        // Optionally redirect after a delay
+        setTimeout(() => {
+          router.push('/article');
+          }, 3000);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArticle();
+  }, [articleId, router]);
 
 //   // Loading state
 //   if (isLoading) {

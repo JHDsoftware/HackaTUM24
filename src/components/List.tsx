@@ -40,7 +40,7 @@ const router = useRouter();
             />
           
           <div className="text-[#8F8F8F] text-xs font-semibold font-poppins break-words w-full"> 
-            <span>{article.author}</span>
+            <span>{article.author_id}</span>
           </div>
 
          </div>
@@ -53,18 +53,18 @@ const router = useRouter();
               </div>
 
               <p className="text-gray-600 text-sm gap-2 mb-4">
-                {article.description}
+                {article.content}
               </p>
               
               
               <div className="flex items-center gap-4 mb-4">
                 <div className="text-[#ED6646] text-xs font-semibold font-poppins">
-                  <span>{article.date}</span>
+                  <span>{article.published_at}</span>
                 </div>
                 
                 <div className="flex items-center gap-1 text-xs text-gray-500">
                   <Eye size={12} />
-                  <span>{article.views}</span>
+                  <span>{article.likes}</span>
                 </div>
 
                 <div className="flex items-center gap-1 text-xs text-gray-500">

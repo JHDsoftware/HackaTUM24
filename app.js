@@ -2,12 +2,23 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const axios = require('axios');
 const bodyParser = require('body-parser');
-const cheerio = require('cheerio'); // 用于从HTML提取内容
+const cheerio = require('cheerio');
+const cors = require('cors'); // Add this line
 
 const DBLink = '48.209.8.200';
 const port = 3307;
 
 const app = express();
+
+// Add CORS configuration before other middleware
+const corsOptions = {
+    origin: 'http://localhost:3000', // Your frontend origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // Azure OpenAI 配置
@@ -39,6 +50,7 @@ const db = mysql.createPool({
         process.exit(1); // 连接失败时退出程序
     }
 })();
+
 // 路由：获取文章列表
 app.get('/articles', async (req, res) => {
     try {
@@ -49,6 +61,7 @@ app.get('/articles', async (req, res) => {
         res.status(500).json({ error: 'Database query error' });
     }
 });
+
 // 路由：生成新闻稿
 app.post('/generate-article', async (req, res) => {
     const { summaries } = req.body;
@@ -75,6 +88,7 @@ app.post('/generate-article', async (req, res) => {
                 return { source, summary, content: 'Error fetching content.' };
             }
         }));
+
         // 构造 GPT-4o 请求的 Prompt
         const prompt = sourcesContent.map((item, index) => {
             return `Source ${index + 1}: ${item.source}\nSummary: ${item.summary}`;
