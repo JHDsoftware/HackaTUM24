@@ -104,7 +104,8 @@ const ArticleContent = ({ children, isPreview = true, toAddr, setIsPreview }: {
      toAddr?: string, 
      setIsPreview?: (isPreview: boolean) => void 
 }) => {
-    const previewContent = `Let's be very clear: I do think Python is the GOAT. I don't deny that. Yet, it doesn't come without flaws either. It might not lose its place in one night, but there are cracks forming.
+    const previewContent = `Solana's ecosystem has grown exponentially, hosting thousands of decentralized applications (dApps) across various sectors. The platform's native cryptocurrency, SOL, has become one of the top digital assets by market capitalization, reflecting growing institutional and retail investor confidence in the network's potential.
+Despite its impressive achievements, Solana has faced challenges, including several network outages that have raised questions about its reliability. However, the development team has demonstrated a strong commitment to addressing these issues through regular updates and improvements to the network's stability.
 
 Edit: Hey everyone, this article reflects my personal opinion, and I fully respect that others may disagree. Healthy debate is welcome — after all, different perspectives are what drive progress!`;
 
