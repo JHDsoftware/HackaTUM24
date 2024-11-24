@@ -76,7 +76,7 @@ export const SendTransaction: FC<SendTransactionProps> = ({ toAddr, onSuccess })
                         Wallet not connected
                         </div>
                          <span className="block group-disabled:hidden" >
-                            Unlock By 1.99 USDC
+                            Unlock By 0.001 SOL
                         </span>
                     </button>
              </div>
