@@ -37,7 +37,7 @@ const AuthorInfo = ({ author, metadata }: { author: Author; metadata: ArticleMet
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <Image
-            src="/profile.jpg"
+            src="/me.jpg"
             alt={author.name}
             width={50}
             height={50}

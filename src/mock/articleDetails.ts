@@ -74,7 +74,7 @@ The platform's technical prowess is evident in its performance metrics. Solana c
     },
     author: {
       address: '3NwSw9xrYf3kNdLCxZenbYgnuoZ3RL9C6EdVmXU7tSr3',
-      name: 'Abdur Rahman',
+      name: 'Xiyue Zhang',
       image: 'https://example.com/images/abdur-rahman.jpg',
       following: false,
       bio: 'Senior Data Scientist | Technical Writer | Python Expert',

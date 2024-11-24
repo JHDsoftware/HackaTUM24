@@ -14,6 +14,7 @@ import  List  from '../../components/List';
 import useUserSOLBalanceStore from '../../stores/useUserSOLBalanceStore';
 
 // Mock
+import { articles } from '../../mock/articles';
 // import { articles } from '../../mock/articles';
 import TrendingChips from 'components/Chips';
 import { articleService } from 'services/api';
@@ -48,7 +49,7 @@ export const HomeView: FC = ({ }) => {
   const [selectedChip, setSelectedChip] = useState('1');
 
   const [selectedArticles, setSelectedArticles] = useState<SelectedArticle[]>([]);
-  const [articles, setArticles] = useState<ArticleOverview[]>([]); // Your articles data
+  const [articleList, setArticleList] = useState<ArticleOverview[]>([]); // Your articles data
 
   const handleSelectionChange = (newSelection: SelectedArticle[]) => {
     setSelectedArticles(newSelection);
@@ -75,15 +76,6 @@ export const HomeView: FC = ({ }) => {
     }
   };
 
-  const generateNewArticle = async () => {
-    try {
-        
-        const result = await articleService.generateArticle(selectedArticles);
-        // console.log('Generated article:', result);
-    } catch (error) {
-        console.error('Error generating article:', error.message);
-    }
-  };
   
   const trendingChips = [
     { id: '1', label: 'Trending' },
@@ -108,8 +100,10 @@ export const HomeView: FC = ({ }) => {
     const fetchArticles = async () => {
       try {
         setIsLoading(true);
-        const data = await articleService.getAllArticles();
-        setArticles(data);
+
+        setArticleList(articles);
+        const apiArticles = await articleService.getAllArticles();
+        setArticleList(prevArticles => [...prevArticles, ...apiArticles]);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -128,6 +122,8 @@ export const HomeView: FC = ({ }) => {
     return <div>Error: {error}</div>;
   }
 
+
+
   return (
 
 <div className="md:hero mx-auto p-2">
@@ -141,7 +137,7 @@ export const HomeView: FC = ({ }) => {
     </div>
     <div className="px-6 py-2">
       <List 
-        articles={articles} 
+        articles={articleList} 
         selectedArticles={selectedArticles}
         onSelectionChange={handleSelectionChange}
       />

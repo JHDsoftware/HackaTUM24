@@ -71,6 +71,20 @@ const GeneratedArticle: FC<GeneratedArticleProps> = () => {
           </h1>
         )}
 
+        {/* Article Image */}
+       
+          <div className="mb-8">
+            <img 
+              src="/e-car.jpg" 
+              alt={titles[0] || 'Article image'}
+              className="w-full h-auto rounded-lg object-cover max-h-[400px]"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+          />
+        </div>
+    
+
         {/* Markdown Content */}
         <div className="text-[#8F8F8F] font-poppins leading-relaxed">
           <ReactMarkdown 
