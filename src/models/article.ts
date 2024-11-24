@@ -41,3 +41,8 @@ export interface ArticleDetails {
   metadata: ArticleMetadata;
   author: Author;
 }
+
+export interface GeneratedArticle {
+  title: string;
+  content: string;
+}

@@ -25,6 +25,19 @@ interface SelectedArticle {
   summary: string;
 }
 
+function extractHeadings(text) {
+    const regex = /#([^\n]*)\n?/g;
+    const matches = text.match(regex) || [];
+    return matches.map(match => match.replace('#', '').trim());
+}
+
+function extractContent(text) {
+    const firstNewlineIndex = text.indexOf('\n');
+    if (firstNewlineIndex === -1) return '';
+    return text.slice(firstNewlineIndex + 1).trim();
+}
+
+
 export const HomeView: FC = ({ }) => {
   const wallet = useWallet();
   const { connection } = useConnection();
@@ -48,11 +61,13 @@ export const HomeView: FC = ({ }) => {
     
     try {
       const result = await articleService.generateArticle(selectedArticles);
+      const headings = extractHeadings(result);
+      const content = extractContent(result);
       router.push({
-        pathname: '/article/generate',
+        pathname: '/genArticle/generate',
         query: { 
-          title: result.title,
-          content: result.content
+          title: headings,
+          content: content
         }
       });
     } catch (error) {
