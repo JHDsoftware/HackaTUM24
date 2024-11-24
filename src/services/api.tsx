@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ArticleOverview } from 'models/articleOverview';
 import { GeneratedArticle } from 'models/article';
 
-const API_BASE_URL = 'http://localhost:3307';
+const API_BASE_URL = 'http://48.209.8.200:3307';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
