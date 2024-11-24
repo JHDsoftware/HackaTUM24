@@ -25,7 +25,8 @@ export const articleService = {
   generateArticle: async (summaries) => {
     try {
       const response = await apiClient.post('/generate-article', { summaries });
-      const text = response.data["generated_article"];
+      console.log('@@@@@@@@@@response@@@@@@@@@@@', response.data);
+      const text = response.data.generated_article;
       if (text) {
         return text;
       }

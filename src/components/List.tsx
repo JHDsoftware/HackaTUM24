@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MessageCircle, Eye, Lock } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -6,6 +6,7 @@ import { ArticleOverview } from '../models/articleOverview';
 import Image from 'next/image';
 import { getRelativeTime } from 'utils/dateUtils';
 import { articleService } from 'services/api';
+import { extractImageUrl } from 'utils/imageUtils';
 
 interface SelectedArticle {
   source: string;
@@ -25,8 +26,7 @@ const List = ({
     onSelectionChange
 }: ListProps) => {
     const router = useRouter();
-    // const [selectedArticles, setSelectedArticles] = useState<SelectedArticle[]>([]);
-
+    
     const handleSelect = (article: ArticleOverview) => {
         const isSelected = selectedArticles.some(
         item => item.source === article.content_link
@@ -55,6 +55,8 @@ const List = ({
     };
 
 
+
+
   return (
     <div className="w-full max-w-2xl mx-auto">
       {articles.map((article, index) => (
@@ -64,10 +66,11 @@ const List = ({
             // onClick={() => handleArticleClick(article.news_id)}
             onClick={(e) => {
                 // Only handle click if it's not on the select button
+            
                 if (!(e.target as HTMLElement).closest('button')) {
                     handleArticleClick('2');
                 }
-    }}
+            }}
         >
 
        
@@ -97,11 +100,11 @@ const List = ({
                         e.stopPropagation(); // Stop event from bubbling up
                         handleSelect(article);
                     }}
-    >
-        {selectedArticles.some(item => item.source === article.content_link) 
-            ? 'Selected' 
-            : 'Select'}
-    </button>
+            >
+                {selectedArticles.some(item => item.source === article.content_link) 
+                    ? 'Selected' 
+                    : 'Select'}
+            </button>
             </div>
           
           <div className="flex justify-between items-start">
@@ -139,7 +142,7 @@ const List = ({
               <Image 
                 width={96}
                 height={96}
-                src={article.image_links}
+                src={extractImageUrl(article.image_links)}
                 alt="Article thumbnail"
                 className="article-image"
                 style={{ objectFit: 'cover' }}

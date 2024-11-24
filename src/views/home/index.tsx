@@ -18,6 +18,7 @@ import useUserSOLBalanceStore from '../../stores/useUserSOLBalanceStore';
 import TrendingChips from 'components/Chips';
 import { articleService } from 'services/api';
 import { ArticleOverview } from 'models/articleOverview';
+import router from 'next/router';
 
 interface SelectedArticle {
   source: string;
@@ -42,26 +43,28 @@ export const HomeView: FC = ({ }) => {
     console.log('Selected articles:', newSelection);
   };
 
-  const handleGenerate = () => {
-    // TODO: Add logic to generate from selected articles
-    console.log('Generating from selected articles:', selectedArticles);
+  const handleGenerate = async () => {
+    if (selectedArticles.length === 0) return;
+    
+    try {
+      const result = await articleService.generateArticle(selectedArticles);
+      router.push({
+        pathname: '/article/generate',
+        query: { 
+          title: result.title,
+          content: result.content
+        }
+      });
+    } catch (error) {
+      console.error('Error generating article:', error);
+    }
   };
 
-    const generateNewArticle = async () => {
+  const generateNewArticle = async () => {
     try {
-        const summaries = [
-        {
-            source: "https://example.com/ev-news",
-            summary: "New regulations for electric vehicles announced"
-        },
-        {
-            source: "https://example.com/battery-tech",
-            summary: "Breakthrough in battery manufacturing technology"
-        }
-        ];
         
-        const result = await articleService.generateArticle(summaries);
-        console.log('Generated article:', result.generated_article);
+        const result = await articleService.generateArticle(selectedArticles);
+        // console.log('Generated article:', result);
     } catch (error) {
         console.error('Error generating article:', error.message);
     }
